@@ -1,0 +1,39 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+int max_width,max_length,front[1000000],right_view[1000000];
+int a[1000000],b[1000000],ans_1_min,ans_2_max,tot_same,k,l;
+int tot_front_view,tot_right_view,vl[1000000],vr[1000000];
+int main()
+{
+    scanf("%d%d",&k,&l);
+    for (int i = 1;i <= k;i++)
+    {
+        scanf("%d",&front[i]);
+        tot_front_view += front[i];
+        max_width = max(front[i],max_width);
+        a[i] = front[i];
+    }
+    for (int i = 1;i <= l;i++)
+    {
+        scanf("%d",&right_view[i]);
+        tot_right_view += right_view[i];
+        max_length = max(right_view[i],max_length);
+        b[i] = front[i];
+    }
+    if (max_width != max_length) printf("No solution.\n");
+    else
+    {
+        for (int i = 1;i <= k;i++)
+        {
+            for (int j = 1;j <= l;j++)
+            {
+                if (front[i] == right_view[j] && vl[i] == 0 && vr[j] == 0)
+                    tot_same += front[i],vl[i] = 1,vr[j] = 1;
+                ans_2_max += min(front[i],right_view[j]);
+            }
+        }
+            printf("%d %d",ans_1_min,ans_2_max);
+    }
+	return 0;
+}
